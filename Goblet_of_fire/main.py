@@ -197,8 +197,8 @@ class Game:
                     elif self.turn == "harry":
                         total_reward += self.qlearning()
                         self.turn = "death_eater"
-                # self.draw()
-                # self.clock.tick(100)
+                self.draw()
+                self.clock.tick(100)
                 if self.check_terminal():
                     break
 
