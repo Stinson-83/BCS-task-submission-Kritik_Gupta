@@ -92,7 +92,7 @@ class Game:
 
         self.totalepisodes=18000
         try:
-            with open("qtable.pkl", "rb") as f:
+            with open("qtable.pkl.txt", "rb") as f:
                 self.qtable = pickle.load(f)
                 print("qtable,loaded")
         except FileNotFoundError:
@@ -214,7 +214,7 @@ class Game:
 
         print(self.count)
 
-        with open("qtable.pkl", "wb") as f:
+        with open("qtable.pkl.txt", "wb") as f:
             pickle.dump(self.qtable, f)
         print("Q-table saved to:", os.path.abspath("qtable.pkl"))
 
