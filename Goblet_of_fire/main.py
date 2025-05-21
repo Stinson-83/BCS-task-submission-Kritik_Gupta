@@ -80,7 +80,7 @@ class Game:
         self.wall = pygame.Surface((50, 50))
         self.wall.fill('darkgreen')
 
-        self.maze = Maze("C:\\Users\\Administrator\\Downloads\\V1.txt")
+        self.maze = Maze("V1.txt")
         self.valid_cells = self.maze.find_valid_spawn_points()
         spawns = random.sample(self.valid_cells, 3)
         self.harry = Character('blue', spawns[0])
