@@ -1,34 +1,63 @@
 # The-Goblet-of-fire-task-
 
- ## Approach
-1. Environment
-The environment is loaded from a maze text file (V1.txt) using the Maze class.
-Walls (X) are impassable; free spaces ( ) are valid cells.
-Each episode starts with random valid positions for:
-Harry (Agent)
-Death Eater (Chaser)
-Cup (Goal)
+## Game Description
 
-2. Q-learning Setup
-State Representation: (Harry_pos, (dx, dy), (cx, cy)), where:
-Harry_pos = current position of Harry
-(dx, dy) = relative position of the Death Eater
-(cx, cy) = fixed position of the cup
-Actions: Up, Down, Left, Right
-Rewards:
-+200 on reaching the cup
--300 if caught by the Death Eater
-Distance-based progress reward and danger penalty for intermediate steps
-Epsilon-greedy policy with decay for exploration
+Characters:
 
-3. Death Eater AI
-Uses Breadth-First Search (BFS) to move one step closer to Harry on each turn.
+- **Harry** (Blue): The agent trained with Q-learning.
+- **Death Eater** (Red): Follows Harry using BFS (shortest path).
+- **Cup** (Purple): The goal Harry must reach.
 
-## Assumptions
-The maze file (V1.txt) is properly formatted and present at the specified path.
-All characters start in valid positions (not on a wall).
-The cup position remains fixed for all episodes (for consistent goal-learning).
-Game visuals (draw()) are disabled during training for faster simulation
+The maze is read from `V1.txt`, where:
+
+- `'X'` represents a wall
+- `' '` (space) represents a path
+
+Each episode resets the positions of Harry, the Cup, and the Death Eater.
+
+---
+
+## Q-Learning Details
+
+- **State**: (Harry’s position, relative position of Death Eater to Harry, position of the Cup)
+- **Actions**: Up, Down, Left, Right
+- **Reward Function**:
+  - +200 for reaching the Cup
+  - -300 for being caught by the Death Eater
+  - Otherwise: progress reward (based on distance change to cup) + danger penalty (based on inverse distance from Death Eater)
+
+---
+
+## Parameters
+
+- `epsilon = 1.0`: Initial exploration rate
+- `epsilon_decay = 0.9996`: How fast exploration decreases
+- `min_epsilon = 0.05`: Minimum exploration rate
+- `alpha = 0.5`: Learning rate
+- `gamma = 0.9`: Discount factor for future rewards
+- `totalepisodes = 12500`: Number of training episodes
+
+---
+
+## Evaluation Metrics
+
+- **Reward Graph**: Rolling average reward per episode
+- **Success Rate Graph**: Whether Harry reached the Cup (1) or not (0)
+
+These help evaluate how well Harry is learning over time.
+
+---
+
+## Classes
+
+- **Maze**: Reads maze and provides BFS for Death Eater
+- **Character**: Represents Harry, Death Eater, or Cup
+- **Game**: Handles training, game updates, rendering, Q-table, and logic
+
+
+## Results
+when running for 18000 episodes i got peak around 12000th episode which was around 70% success rate
+
 
 ## Failed Approach
 I also came up with a new strategy but was not able to code it,
